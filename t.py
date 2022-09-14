@@ -3,7 +3,7 @@ from flask import Flask
 
 app = Flask(__name__,static_url_path='/static')
 
-DATA = 'Database.json'
+DATA = './static/Database.json'
 students = []
 
 
@@ -26,9 +26,8 @@ def save_json(var):
 @app.route('/search/<name>')
 def search(name=""):
         students_json=load_json(DATA)
-        student_2_search=name
         for stud in students_json:
-         if stud['name'] == student_2_search:
+         if stud['name'] == name:
             return stud
         else:
            return "Student not found"
@@ -36,14 +35,14 @@ def search(name=""):
 @app.route('/del/<name>')
 def kill(name=""):
         students_json=load_json(DATA)
-        students_2_del=name
         for stud in students_json:
-            if stud["name"] == students_2_del:
+            if stud["name"] == name:
                 students_json.remove(stud)
-                # print(students_json)
-                return save_json(students_json), students_json 
-            else:
-               return f"{name} not found"
+                save_json(students_json)
+            return students_json 
+        else:
+            return f"{name} not found"
+
 
 
 @app.route('/add/<name>/<int:age>')
