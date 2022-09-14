@@ -30,7 +30,7 @@ def search(name=""):
          if stud['name'] == name:
             return stud
         else:
-           return "Student not found"
+           return f"{name} not found"
 
 @app.route('/del/<name>')
 def kill(name=""):
